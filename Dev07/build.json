@@ -1,0 +1,11 @@
+{
+     "android": {
+      "release": {
+        "keystore": "C:\\Gforms.keystore",
+        "storePassword": "LAB_RAT1006",
+        "alias": "gforms",
+        "password": "LAB_RAT1006",
+        "keystoreType": ""
+      }
+     }
+ }
