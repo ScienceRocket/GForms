@@ -105,8 +105,8 @@ function LOGIN_ExecuteLogin()
                  
             }      
         }).fail(function (jqXHR, textStatus, errorThrown) {  
-		    
-            $('[lbl="login.loading"]').html("Unable to login.<br/>Please ensure connectivity to the internet.");
+
+            $('[lbl="login.loading"]').html("Unable to login.<br/>Please ensure connectivity to the internet.<br/>" + textStatus + "<br/>" + errorThrown);
             $("[btn='SubmitLogin']").removeAttr("disabled");
 
             if ($('[txt="username"]').val() == "admin")
