@@ -4,11 +4,12 @@
 
 <head>
 
-    <title>GISCOE Mobile Builder</title>
+    <title>GForms</title>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta http-equiv="Pragma" content="no-cache">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
     <style id="G_CustomCSS"></style>
     <style>
         @-ms-viewport {
@@ -24,9 +25,12 @@
         @-ms-viewport {
             user-zoom: fixed;
         }
+
+        @viewport {
             user-zoom: fixed;
         }
     </style>
+
 
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -60,9 +64,6 @@
     <link href="assets/admin/layout/css/custom.css" rel="stylesheet" type="text/css" />
 
 
-    <link rel="stylesheet" href="scripts/jquery-ui-1.12.1/jquery-ui.min.css">
-
-
 
     <!--===============================================================================================-->
     <link rel="icon" type="image/png" href="images/icons/favicon.ico" />
@@ -79,8 +80,7 @@
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="css/util.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
-
-
+    <!--===============================================================================================-->
 
     <style>
         body {
@@ -90,10 +90,6 @@
 
         .android .view {
             background: #333;
-        }
-
-        #MainForm {
-            background: #595959 !important;
         }
 
         option {
@@ -106,35 +102,29 @@
         }
     </style>
 
+
+    <link rel="stylesheet" href="scripts/jquery-ui-1.12.1/jquery-ui.min.css">
+
+
     <script type="text/javascript" charset="utf-8" src="lib/jquery.min.js"></script>
     <script type="text/javascript" charset="utf-8" src="lib/fastclick.min.js"></script>
-
-     
     <script src='SQLLite.js'></script>
     <script src='ControlsFunctions.js'></script>
     <script src='ViewFunctions.js'></script>
     <script src='PivotFunctions.js'></script>
     <script src='DynoVar.js'></script>
-
     <script src='login.js'></script>
-
-
-
-
     <script src="Map/GisFunctions.js"></script>
     <script src="scripts/LabSheet.js"></script>
     <script src="scripts/jquery-ui-1.12.1/external/jquery/jquery.js"></script>
     <script src="scripts/jquery-ui-1.12.1/jquery-ui.min.js"></script>
 
-
-
-    <link rel="stylesheet" type="text/css" href="scripts/jquery-ui.css">
-    <!--===============================================================================================-->
-
-
     <script src="lib/jsig/jSignature.min.js"></script>
-
     <script>
+
+
+
+        var dbPhotos;
 
 
         var dbPhotos;
@@ -211,7 +201,7 @@
 
             }
             catch (exp) {
-                alert("Image stroge Database is not available.");
+
                 console.log("Images not avaliable");
             }
 
@@ -272,6 +262,18 @@
             });
 
 
+            $('[act="MapModule"]').on({
+                click: function () {
+                    $(".panel").hide();
+
+                    $("#SyncPanel").show();
+                    $("#SyncPanel").load("map/offlineMaps.html");
+                    /* $("#SyncPanel").html('<iframe width="100%"  height="600px" style="width:100%; height:600px" src="map/tpk-layer.html?v=1">Loading...</frame>');*/
+
+                }
+            });
+
+
             $('[act="SyncModule"]').on({
                 click: function () {
                     $(".panel").hide();
@@ -288,7 +290,7 @@
             $("#loginSection").hide('fast');
 
             // If already logged in, load settings
-            if (loggedinuser != undefined && loggedinuser.UserID != -1 && loggedinuser.UserID != undefined) {
+            if (loggedinuser != undefined && loggedinuser.UserID != -1 && loggedinuser.UserID != undefined &&1==2) {
 
                 InitAppConfig();
 
@@ -302,16 +304,6 @@
             }
         }
 
-
-        function GetEditFormName(fname) {
-            for (var x = 0; x < FormSet.applications[global_applicationid].forms.length; x++)
-                if (FormSet.applications[global_applicationid].forms[x].FormName == fname) {
-                    $(".panel").hide();
-                    $("#FORM_" + FormSet.applications[global_applicationid].forms[x].FormID).show();
-                    LoadController(x);
-
-                }
-        }
 
         function initWelcome() {
 
@@ -336,7 +328,7 @@
                 for (var xA = 0; xA < FormSet.applications.length; xA++) {
                     $('[container="listOfApplications"]').append(
                         $("<div>")
-                            .attr("class", "col-lg-3 col-md-3 col-sm-6 col-xs-12")
+                            .attr("class", "col-sm-12")
                             .attr("index", xA)
                             .on({
                                 click: function () {
@@ -390,7 +382,7 @@
 
         function InitApplication(appIndex) {
 
-
+            iCurrentActivePage = -1;
             rootUrl = serverUrl;
             global_applicationid = appIndex;
             $('[container="footer"]').html("Init SQL");
@@ -399,12 +391,10 @@
             $('[container="footer"]').html("Loading Application");
             $("[container='WorkWindow']").show('fast');
 
-
-
             UpdateJsonFields();
             var page = 0;
-            $("#MenuList").html("<br/><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span txt='FrontMessage'><i class='fa fa-refresh'></i> Please wait... <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Loading pick list data...<span></p><div container='LandingPage'></div>");
-
+            $("#MenuList").html("<br/><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span txt='FrontMessage'><i class='fa fa-refresh'></i> Please wait... <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Loading pick list data...<span></p>");
+            console.log("Checking...");
             for (page = 0; page < FormSet.applications[global_applicationid].forms.length; page++) {
                 {
 
@@ -418,35 +408,37 @@
                         }
                     }
 
-                    $("#MenuList").append(
-                        $("<div>")
-                            .attr("class", "col-lg-3 col-md-3 col-sm-6 col-xs-12")
-                            .attr("index", "1")
-                            .attr("pageid", page)
-                            .css("display", (FormSet.applications[global_applicationid].forms[page].ShowForm == 2 ? "block" : "none"))
-                            .on({
-                                click: function () {
-                                    $(".panel").hide();
-                                    $("#FORM_" + FormSet.applications[global_applicationid].forms[$(this).attr("pageid")].FormID).show();
-                                    LoadController($(this).attr("pageid"));
-                                }
-                            })
-                            .append(
+
+                    if (FormSet.applications[global_applicationid].forms[page].ShowForm == 2) {
+                        $("#MenuList").append(
                             $("<div>")
-                                .attr("class", "dashboard-stat blue")
-                                .append($("<div>").attr("class", "visual").append($("<i>").css("margin-left", "0px").attr("class", FormSet.applications[global_applicationid].forms[page].FAIconName)))
-                                .append($("<div>").attr("class", "details").css("padding-right", "2px")
-                                    .append($("<div>").attr("class", "number").html(""))
-                                    .append($("<div>").attr("class", "desc").html(FormSet.applications[global_applicationid].forms[page].FormName))
-
-
-                                )
+                                .addClass("col-md-6")
+                                .attr("index", "1")
+                                .attr("pageid", page)
+                                .on({
+                                    click: function () {
+                                        $(".panel").hide();
+                                        $("#FORM_" + FormSet.applications[global_applicationid].forms[$(this).attr("pageid")].FormID).show();
+                                        LoadController($(this).attr("pageid"));
+                                    }
+                                })
                                 .append(
-                                $("<a>").attr("class", "more").html()
-                                )
-                            )
+                                $("<div>")
+                                    .attr("class", "dashboard-stat blue")
+                                    .append($("<div>").attr("class", "visual").append($("<i>").css("margin-left", "0px").attr("class", FormSet.applications[global_applicationid].forms[page].FAIconName)))
+                                    .append($("<div>").attr("class", "details").css("padding-right", "2px")
+                                        .append($("<div>").attr("class", "number").html(""))
+                                        .append($("<div>").attr("class", "desc").html(FormSet.applications[global_applicationid].forms[page].FormName))
 
-                    );
+
+                                    )
+                                    .append(
+                                    $("<a>").attr("class", "more").html()
+                                    )
+                                )
+
+                        );
+                    }
 
 
                     var c =
@@ -468,7 +460,7 @@
             }
 
             for (page = 0; page < FormSet.applications[global_applicationid].views.length; page++) {
-                if (FormSet.applications[global_applicationid].views[page].ShowForm == 0) {
+                /*if (FormSet.applications[global_applicationid].views[page].ShowForm == 0)*/ {
 
                     /*
                                         if (ExternalFormLink.fullUrl != "") {
@@ -482,14 +474,14 @@
 
                     $("#MenuList").append(
                         $("<div>")
-                            .attr("class", "col-lg-3 col-md-3 col-sm-6 col-xs-12")
+                            .attr("class", "col-md-6")
                             .attr("index", "1")
                             .attr("pageid", page)
                             .on({
                                 click: function () {
                                     $(".panel").hide();
                                     $("#VIEW_" + FormSet.applications[global_applicationid].views[$(this).attr("pageid")].ViewID).show();
-                                    LoadView($(this).attr("pageid"));
+                                    LoadView($(this).attr("pageid"), "#VIEW_" + FormSet.applications[global_applicationid].views[$(this).attr("pageid")].ViewID);
                                 }
                             })
                             .append(
@@ -543,7 +535,7 @@
 
                     $("#MenuList").append(
                         $("<div>")
-                            .attr("class", "col-lg-3 col-md-3 col-sm-6 col-xs-12")
+                            .attr("class", "col-sm-12")
                             .attr("index", "1")
                             .attr("pageid", page)
                             .on({
@@ -614,6 +606,9 @@
              ); */
 
 
+
+            $("#G_CustomCSS").html(FormSet.applications[global_applicationid].CustomCSS);
+            $("#SpecialScripts").html("<scr" + "ipt>" + FormSet.applications[global_applicationid].CustomScript + "</scri" + "pt>");
             $('[container="footer"]').html("Application Loaded");
 
             if (ExternalFormLink.PageID != undefined) {
@@ -621,9 +616,7 @@
             }
 
 
-            $("#SpecialScripts").html("");
-            $("#G_CustomCSS").html(FormSet.applications[global_applicationid].CustomCSS);
-            eval(FormSet.applications[global_applicationid].CustomScript);
+            $("[index][pageid]").attr("class", "col-md-6");
 
         }
 
@@ -632,6 +625,58 @@
             //$(".pages").css("height", ($("body").height() - 30) + "px")
         }
     </script>
+
+
+
+    <script type="text/javascript">
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function () {
+                navigator.serviceWorker.register('sw.js').then(function (registration) {
+                    // Registration was successful
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }, function (err) {
+                    // registration failed :(
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
+
+        $(document).ready(function () {
+            self.addEventListener('install', function (event) {
+                event.waitUntil(
+                    caches.open(cacheName).then(function (cache) {
+                        return cache.addAll(
+                            [
+                                '/index.html',
+                                '/assets/js/lawnchair/adapters/dom.js',
+                                '/assets/js/lawnchair/adapters/webkit-sqlite.js',
+                                '/cordova.js',
+                                '/config.js',
+                                '/assets/form-basic.css',
+                                '/assets/global/plugins/font-awesome/css/font-awesome.min.css',
+                                '/assets/global/plugins/bootstrap/css/bootstrap.min.css',
+                                '/lib/jquery.min.js',
+                                '/lib/fastclick.min.js',
+                                '/SQLLite.js',
+                                '/ControlsFunctions.js',
+                                '/ViewFunctions.js',
+                                '/PivotFunctions.js',
+                                '/DynoVar.js',
+                                '/login.js',
+                                '/lib/jsig/jSignature.min.js',
+                                '/Map/GisFunctions.js',
+                                '/scripts/LabSheet.js',
+                                '/sync.html'
+                            ]
+                        );
+                        console.log("Cache completed");
+                    })
+                );
+            });
+        });
+    </script>
+
 </head>
 
 <body style="-webkit-overflow-scrolling:touch" onresize="windowResizeW()">
@@ -706,12 +751,12 @@
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;">
-
+                            Preparing Sources...
                         </div>
                         <div class="panel-body">
                             <img src="assets/global/img/ajax-loading.gif">
                             &nbsp;
-                            <p></p>
+                            <p>Please be patient</p>
                             <hr />
                             <br />
                         </div>
@@ -720,7 +765,7 @@
 
             </div>
             <div class="container-login100" id="loginSection">
-                <h1>Loading Login... Please wait...</h1>
+                <h1>Loading Login...</h1>
             </div>
             <div class="container-login100" id="switchApplication" style="display:none; color:white; padding:3px; background-color:black !important; background:black;" align="center">
                 <h1>Multiple Applications are avaliable</h1>
@@ -730,7 +775,6 @@
             </div>
 
             <div class="" container='WorkWindow' style="display:none;">
-
                 <div class="row">
                     <div class="col-sm-12" style="background-color:#535353; color:white">
                         <a class="menuButton" act="LoadMenu" data-left-menu="left" data-transition="cover" style="padding:4px; float: left"> <i class='fa fa-bars'></i> Menu</a>
@@ -740,6 +784,8 @@
 
                             <div id="divLanguageBar" style="display:inline;"></div>
 
+
+                            <a class="btn btn-primary" act="MapModule" style='background-color:blue !important'><i class="fa fa-map"></i>Map Menu</a>
                             <a class="btn btn-primary" act="SyncModule"><i class="fa fa-refresh"></i>Sync Menu</a>
                         </div>
                     </div>
@@ -757,7 +803,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div style="color:white; float:right; position:fixed; bottom:0px; z-index:300;" container="footer"><p>Starting Up</p></div>
                 <div id="SpecialScripts"></div>
             </div>
@@ -766,11 +811,14 @@
     </div>
     <div id="dialog" title="Process">
         <div id="ProcessContent">
-
         </div>
     </div>
-
+    <div id='dim_wrapper' style='width:100%; height:100%; background:#000; z-index:10; position:fixed; top:0px;display:none; text-align:center; opacity:0.75'>
+        <h2 style="
+    color: white;
+">
+            <br />Loading
+        </h2>
+    </div>
 </body>
 </html>
-
-

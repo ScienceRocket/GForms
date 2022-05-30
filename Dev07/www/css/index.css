@@ -7,22 +7,6 @@ body {
     font-size:12px;
 }
 
-
-span{
-    font-size: 14px;
-}
-
-input {
-    width: 100%;
-    color:black;
-    z-index: 10000;
-}
-select{
-    width: 100%;
-    color:black;
-    z-index: 10000;
-}
-
 .app {
     background: url(../images/cordova.png) no-repeat center top; 
     background-size: contain;

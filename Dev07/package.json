@@ -2,36 +2,32 @@
     "name": "Dev07",
     "version": "1.0.0",
     "private": true,
-    "dependencies": {
-        "cordova-android": "~5.2.1",
-        "cordova-ios": "~4.2.0",
-        "cordova-windows": "4.4.2"
+    "devDependencies": {
+        "cordova-android": "5.2.1",
+        "cordova-ios": "^6.2.0",
+        "cordova-plugin-camera": "~2.4.1",
+        "cordova-plugin-device": "~2.0.2",
+        "cordova-plugin-file": "~4.3.3",
+        "cordova-plugin-geolocation": "~2.4.3",
+        "cordova-plugin-whitelist": "1.2.2",
+        "cordova-sqlite-storage": "~0.8.5",
+        "cordova-windows": "4.4.2",
+        "phonegap-plugin-barcodescanner": "~4.1.0"
     },
     "cordova": {
         "platforms": [
             "android",
-            "ios",
-            "windows"
+            "windows",
+            "ios"
         ],
         "plugins": {
             "cordova-plugin-whitelist": {},
             "cordova-plugin-device": {},
-            "cordova-plugin-camera": {},
             "cordova-plugin-geolocation": {},
             "cordova-plugin-file": {},
-            "cordova-sqlite-storage": {},
-            "cordova-sqlite-ext": {},
-            "cordova-plugin-barcodescanner": {}
+            "phonegap-plugin-barcodescanner": {},
+            "cordova-plugin-camera": {},
+            "cordova-sqlite-storage": {}
         }
-    },
-    "devDependencies": {
-        "cordova-plugin-whitelist": "1.2.2",
-        "cordova-plugin-device": "~2.0.2",
-        "cordova-plugin-camera": "~2.4.1",
-        "cordova-plugin-geolocation": "~2.4.3",
-        "cordova-plugin-file": "~4.3.3",
-        "cordova-sqlite-storage": "~0.8.5",
-        "cordova-sqlite-ext": "~2.2.0",
-        "cordova-plugin-barcodescanner": "~0.7.4"
     }
 }

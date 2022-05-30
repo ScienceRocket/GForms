@@ -28,7 +28,8 @@ function LoadView2(page, control) {
     // Reset All the panel - Just makes the app having less HTML present
     // Also, if there is an error, the app will just say "Loading...".... 
     // #TODO: Add fail safe code... sometime...
-    var c = $("<div>");   
+
+    var c = $("<div>").css("background-color","white").css("padding","10px");   
     $(c).append(
                 $("<div>")
                     .attr("class", "row")
@@ -135,44 +136,56 @@ function LoadView2(page, control) {
         .on({ 
         click:function() {
             
+			
+			if(FormSet.applications[global_applicationid].views[page].ShowForm==0)
+			{
+				
+				return;
+			}
             
-            var form2ID = 0; 
-            var formIndex = 0;    
+            var form2ID = FormSet.applications[global_applicationid].views[page].ShowForm; 
+            var formIndex = -1;    
             
-            
+            console.log("looking for form " + form2ID);
             for(var formsC =0; formsC < FormSet.applications[global_applicationid].forms.length; formsC ++ )
             {  
                 if(FormSet.applications[global_applicationid].forms[formsC].FormSysID == form2ID )
                     {
-                        formIndex = formsC;
+                        formIndex = formsC;						
                         break;
                     }
             }
             
+			if(formIndex==-1){
+				alert("Form to open was not found");
+				console.log("No Form with id "+  form2ID);
+			}
             
             
-            var FormField = "ID";
-            var ViewField = "ID";
+            var FormField = "PK_ID";
+            var ViewField = "PK_ID";
             
             // Find the ID Field
-            formData = SQLOfflineData[ FormSet.applications[global_applicationid].views[formIndex].PrimaryTable ].rows;
+            formData = SQLOfflineData[ FormSet.applications[global_applicationid].views[page].PrimaryTable ].rows;
             viewRow = SQLOfflineData[ FormSet.applications[global_applicationid].views[page].PrimaryTable ].rows[$(this).attr("recordrow")];
             
             viewValue2Check = viewRow[ViewField];
             FormRowId = 0;
              
-            for(FormRowId=0; FormRowId< formData.length; FormRowId++)
+            /*for(FormRowId=0; FormRowId< formData.length; FormRowId++)
             {
                 if(formData[FormRowId][FormField] == viewValue2Check)
                 {
                     break;
                 }
                 
-            }
+            }*/
+			
             
-                                            $(".panel").hide();
-                                            $("#FORM_" + FormSet.applications[global_applicationid].forms[formIndex].FormID).show();
-                                           LoadController(formIndex, undefined, FormRowId);
+			$(".panel").hide();
+			$("#FORM_" + FormSet.applications[global_applicationid].forms[formIndex].FormID).show();
+			
+		   LoadController(formIndex, undefined, $(this).attr("recordrow"));
             
             
             

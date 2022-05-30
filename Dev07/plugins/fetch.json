@@ -23,14 +23,6 @@
         "is_top_level": false,
         "variables": {}
     },
-    "cordova-plugin-camera": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-camera@2.4.1"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
     "cordova-plugin-geolocation": {
         "source": {
             "type": "registry",
@@ -43,6 +35,14 @@
         "source": {
             "type": "registry",
             "id": "cordova-plugin-file@4.3.3"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "phonegap-plugin-barcodescanner": {
+        "source": {
+            "type": "local",
+            "path": "C:\\Dev\\Mobile\\GForms_VS\\GFrom_vs\\GFrom_vs\\plugins\\phonegap-plugin-barcodescanner"
         },
         "is_top_level": true,
         "variables": {}
@@ -64,11 +64,10 @@
         "is_top_level": true,
         "variables": {}
     },
-    "cordova-plugin-barcodescanner": {
+    "cordova-plugin-camera": {
         "source": {
-            "type": "git",
-            "url": "https://github.com/hypery2k/cordova-barcodescanner-plugin",
-            "subdir": "."
+            "type": "registry",
+            "id": "cordova-plugin-camera@2.4.1"
         },
         "is_top_level": true,
         "variables": {}

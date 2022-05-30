@@ -104,14 +104,10 @@ function LOGIN_ExecuteLogin()
                  $("[btn='SubmitLogin']").removeAttr("disabled");
                  
             }      
-        }).fail(function (jqXHR, textStatus, errorThrown) {  
-
-            $('[lbl="login.loading"]').html("Unable to login.<br/>Please ensure connectivity to the internet.<br/>" + textStatus + "<br/>" + errorThrown);
+		}).fail(function () {  
+		    
+            $('[lbl="login.loading"]').html("Unable to login.<br/>Please ensure connectivity to the internet.");
             $("[btn='SubmitLogin']").removeAttr("disabled");
-
-            if ($('[txt="username"]').val() == "admin")
-                $('[lbl="login.loading"]').html("Unable to connect: " + textStatus + " <br/>" + errorThrown);
-
                 // Find the offline config
         } );   
 }
@@ -191,6 +187,7 @@ function SYNC_Logout() {
 		        $('[container="usererrormessage"]').hide();
 		    }
 		}).fail(function () {
+			alert("Please refresh");
 		    $("#divStatus").html("Logout unsuccessfull...<br/>Please ensure connectivity to the server.");
 		    $("[act='Logout']").removeAttr("disabled");
 		    // Find the offline config
