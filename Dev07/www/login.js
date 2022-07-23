@@ -72,6 +72,13 @@ function InitLoginScreen() {
       LOGIN_ExecuteLogin();
     },
   });
+  
+  if(autoLogin==true){
+      $('[lbl="login.loading"]').html("Loading... Please wait...");
+      $('[txt="username"]').val(guestUser);
+      $('[txt="password"]').val("");
+      LOGIN_ExecuteLogin();
+  }
 }
 
 function LOGIN_ExecuteLogin() {
